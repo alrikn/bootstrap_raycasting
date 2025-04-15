@@ -6,21 +6,13 @@
 ##
 
 LIB_NAME = libmy.a
-NAME = my_radar
+NAME = raytrace
 TEST_BIN = unit_tests
 
 SRC = ./main.c \
-	./src/memory/background.c \
-	./src/linked_lists/linked_list_air.c \
-	./src/linked_lists/linked_list_tower.c \
-	./src/interaction/time_handler.c \
-	./src/read_file.c \
-	./src/interaction/movement.c \
-	./src/game_handler.c \
-	./src/memory/initializer.c \
-	./src/interaction/bucket_handler.c \
-	./src/memory/memory_handling.c \
-	./src/interaction/satellite_interaction.c \
+	./is_wall.c \
+	./draw_floor_ceiling.c \
+	./init_player.c \
 	./src/utils/my_cooler_putstr.c \
 	./src/utils/my_num_to_str.c \
 	./src/utils/my_numlen.c \

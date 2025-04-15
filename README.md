@@ -1,6 +1,6 @@
-# my_radar
+# bootstrap_raycasting
 
-A highly efficient radar simulation handling planes and control towers.
+a very fast way of detemining how raytracing works
 
 ## Build
 
