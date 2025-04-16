@@ -45,6 +45,7 @@ float cast_single_ray(player_t player, float ray_angle,
 void render_wall_column(sfRenderWindow *window, int column, float wall_height,
     sfColor color);
 void key_pressed(sfEvent *event, player_t *player);
+void print_pos(int player_x, int player_y);
 
 extern const int map[MAP_HEIGHT][MAP_WIDTH];
 

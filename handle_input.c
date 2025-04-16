@@ -7,6 +7,7 @@
 
 #include "my.h"
 #include "math.h"
+#include "struct.h"
 #include <stdio.h>
 
 static float normalize_angle(float angle)
@@ -38,6 +39,7 @@ static void move_player(player_t *player, float move_dir)
     if (!is_wall(new_x, new_y)) {
         player->x = new_x;
         player->y = new_y;
+        print_pos(player->x, player->y);
     } else {
         printf("move not allowed\n");
         printf("new_x = %f, new_y = %f\n", new_x, new_y);
