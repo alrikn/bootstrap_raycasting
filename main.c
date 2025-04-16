@@ -39,84 +39,6 @@ static int explanation(void)
 //            fm->status.invisible_sprites = false;
 //    }
 //}
-//
-//int manage_events(core_t *fm, sfEvent *event)
-//{
-//    if (fm->status.game_over == true) {
-//        return 1;
-//    }
-//    while (sfRenderWindow_pollEvent(fm->window, event)) {
-//        if (event->type == sfEvtClosed) {
-//            fm->status.game_over = true;
-//            return 1;
-//        }
-//        if (event->key.type == sfEvtKeyPressed) {
-//            key_pressed(fm, event);
-//        }
-//    }
-//    return 0;
-//}
-//
-//int game_loop(core_t *fm, sfEvent *event, int animation_framerate)
-//{
-//    if (update_animate(fm)) {
-//        sfRenderWindow_clear(fm->window, sfBlack);
-//        sfRenderWindow_drawSprite(fm->window, fm->background.back_sp,
-//        NULL);
-//        //game_handler(event, fm);
-//        sfRenderWindow_display(fm->window);
-//    }
-//    return 0;
-//}
-//
-//int running(core_t *fm, sfEvent *event, int animation_framerate)
-//{
-//    int return_result = 0;
-//
-//    sfRenderWindow_setFramerateLimit(fm->window, 60);
-//    while (sfRenderWindow_isOpen(fm->window)) {
-//        game_loop(fm, event, animation_framerate);
-//        if (manage_events(fm, event) == 1)
-//            return 0;
-//    }
-//    return return_result;
-//}
-//
-//int main(int argc, char **av)
-//{
-//    core_t fm = {0};
-//    sfEvent event = {0};
-//    int is_working = 0;
-//
-//    if (argc != 2)
-//        return 84;
-//    if (av[1][0] == '-' && av[1][1] == 'h' && my_strlen(av[1]) == 2)
-//        return explanation();
-//    initializer(&fm, av[1]);
-//    if (is_working == 84 || fm.status.game_over == true) {
-//        my_error_putstr("smth went wrong\n");
-//        return 84;
-//    }
-//    running(&fm, &event, 5);
-//    destroy_everything(&fm);
-//    if (fm.status.game_crash == true) {
-//        my_error_putstr("smth went wrong\n");
-//        return 84;
-//    }
-//    return 0;
-//}
-//
-
-int map[MAP_HEIGHT][MAP_WIDTH] = {
-    {1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 1, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 0, 1},
-    {1, 0, 1, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1}
-};
 
 sfRenderWindow* create_window(void)
 {
@@ -124,6 +46,14 @@ sfRenderWindow* create_window(void)
 
     return sfRenderWindow_create(video_mode, "Raytracer",
     sfClose | sfTitlebar, NULL);
+}
+
+void handle_closure(sfRenderWindow* window, sfEvent event)
+{
+    while (sfRenderWindow_pollEvent(window, &event)) {
+        if (event.type == sfEvtClosed)
+            sfRenderWindow_close(window);
+    }
 }
 
 int main(int ac, char **av)
@@ -137,12 +67,10 @@ int main(int ac, char **av)
     sfRenderWindow_setFramerateLimit(window, 60);
         init_player(&player);
     while (sfRenderWindow_isOpen(window)) {
-        while (sfRenderWindow_pollEvent(window, &event)) {
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
-        }
+        handle_closure(window, event);
         sfRenderWindow_clear(window, sfBlack);
         draw_floor_and_ceiling(window);
+        cast_all_rays(window, player);
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);

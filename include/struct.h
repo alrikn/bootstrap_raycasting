@@ -18,9 +18,15 @@
     #include <SFML/System/Vector2.h>
     #include <stdbool.h>
     #include <SFML/Audio/Music.h>
-    # define TILE_SIZE 64
-    # define MAP_WIDTH 8
-    # define MAP_HEIGHT 8
+    #define TILE_SIZE 64
+    #define MAP_WIDTH 8
+    #define MAP_HEIGHT 8
+    #define FOV (M_PI / 3)
+    #define NUM_RAYS 800
+    #define STEP_SIZE 0.1f
+    #define SCREEN_WIDTH 800
+    #define SCREEN_HEIGHT 600
+    #define PROJECTION_PLANE ((float)800 / 2) / tan(FOV / 2)
 
 typedef struct {
     float x;
@@ -31,8 +37,13 @@ typedef struct {
 void init_player(player_t *player); // Inits the player's position and angle
 int is_wall(int x, int y);// Returns 1 if the position corresponds to a wall
 void draw_floor_and_ceiling(sfRenderWindow *window);//Drw floor&celing > screen
+void cast_all_rays(sfRenderWindow *window, player_t player);
+float cast_single_ray(player_t player, float ray_angle,
+    sfRenderWindow *window);
+void render_wall_column(sfRenderWindow *window, int column, float wall_height,
+    sfColor color);
 
-extern int map[MAP_HEIGHT][MAP_WIDTH];
+extern const int map[MAP_HEIGHT][MAP_WIDTH];
 
 typedef struct tower {
     sfVector2f position;
