@@ -27,6 +27,8 @@
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600
     #define PROJECTION_PLANE ((float)800 / 2) / tan(FOV / 2)
+    #define ROTATION_SPEED 0.05f
+    #define MOVEMENT_SPEED 1.5f
 
 typedef struct {
     float x;
@@ -42,6 +44,7 @@ float cast_single_ray(player_t player, float ray_angle,
     sfRenderWindow *window);
 void render_wall_column(sfRenderWindow *window, int column, float wall_height,
     sfColor color);
+void key_pressed(sfEvent *event, player_t *player);
 
 extern const int map[MAP_HEIGHT][MAP_WIDTH];
 

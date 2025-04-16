@@ -8,8 +8,10 @@
 #include "./include/my.h"
 #include "struct.h"
 #include <SFML/Window/Event.h>
+#include <SFML/Window/Keyboard.h>
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 static int explanation(void)
 {
@@ -23,22 +25,6 @@ static int explanation(void)
     my_cooler_putstr("\t'S' key\tenable/disable sprites.\n");
     return 0;
 }
-//
-//static void key_pressed(core_t *fm, sfEvent *event)
-//{
-//    if (event->key.code == sfKeyL) {
-//        if (fm->status.disable_hitboxes == false)
-//            fm->status.disable_hitboxes = true;
-//        else
-//            fm->status.disable_hitboxes = false;
-//    }
-//    if (event->key.code == sfKeyS) {
-//        if (fm->status.invisible_sprites == false)
-//            fm->status.invisible_sprites = true;
-//        else
-//            fm->status.invisible_sprites = false;
-//    }
-//}
 
 sfRenderWindow* create_window(void)
 {
@@ -48,11 +34,13 @@ sfRenderWindow* create_window(void)
     sfClose | sfTitlebar, NULL);
 }
 
-void handle_closure(sfRenderWindow* window, sfEvent event)
+void handle_closure(sfRenderWindow* window, sfEvent event, player_t *player)
 {
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
+        if (event.key.type == sfEvtKeyPressed)
+            key_pressed(&event, player);
     }
 }
 
@@ -67,7 +55,7 @@ int main(int ac, char **av)
     sfRenderWindow_setFramerateLimit(window, 60);
         init_player(&player);
     while (sfRenderWindow_isOpen(window)) {
-        handle_closure(window, event);
+        handle_closure(window, event, &player);
         sfRenderWindow_clear(window, sfBlack);
         draw_floor_and_ceiling(window);
         cast_all_rays(window, player);

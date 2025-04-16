@@ -65,7 +65,7 @@ static sfColor make_colour(float distance, player_t player, float ray_angle)
     float y_offset = fmod(hit_y, TILE_SIZE);
 
     if (x_offset < 1.0f || x_offset > TILE_SIZE - 1.0f)
-        colour = sfColor_fromRGB(200, 100, 100);
+        colour = sfColor_fromRGB(2, 247, 2);
     else
         colour = sfColor_fromRGB(100, 100, 200);
     return colour;
