@@ -8,6 +8,7 @@
 #include "my.h"
 #include "struct.h"
 #include <SFML/Graphics/Color.h>
+#include <SFML/System/Vector2.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -53,6 +54,16 @@ float cast_single_ray(player_t player, float ray_angle, sfRenderWindow* window)
     return distance * correction;
 }
 
+static sfVector2f get_ray_hit_position(float distance, player_t player,
+    float ray_angle)
+{
+    sfVector2f hit;
+
+    hit.x = (player.x + cosf(ray_angle) * distance);
+    hit.y = (player.y + sinf(ray_angle) * distance);
+    return hit;
+}
+
 /*
 ** first is east west sencound is south north
 */
@@ -61,13 +72,18 @@ static sfColor make_colour(float distance, player_t player, float ray_angle)
     sfColor colour;
     float hit_x = player.x + cos(ray_angle) * distance;
     float hit_y = player.y + sin(ray_angle) * distance;
+    cardinal_t card = find_cardinal(hit_x, hit_y);
     float x_offset = fmod(hit_x, TILE_SIZE);
     float y_offset = fmod(hit_y, TILE_SIZE);
 
-    if (x_offset < 1.0f || x_offset > TILE_SIZE - 1.0f)
-        colour = sfColor_fromRGB(2, 247, 2);
-    else
+    if (card == NORTH || card == SOUTH)
         colour = sfColor_fromRGB(100, 100, 200);
+    if (card == WEST || card == EAST)
+        colour = sfColor_fromRGB(100, 200, 100);
+    if (card == PERIM)
+        colour = sfColor_fromRGB(237, 237, 19);
+    if (card == NOWHERE)
+        colour = sfColor_fromRGB(100, 100, 100);
     return colour;
 }
 
@@ -91,4 +107,5 @@ void cast_all_rays(sfRenderWindow* window, player_t player)
         render_wall_column(window, i, wall_height,
         make_colour(distance, player, ray_angle));
     }
+    draw_ray(&player, window);
 }

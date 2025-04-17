@@ -18,6 +18,8 @@ SRC = ./main.c \
 	./map_create.c \
 	./handle_input.c \
 	./print_pos.c \
+	./find_cardinal.c \
+	./handle_rays_new.c \
 	./src/utils/my_cooler_putstr.c \
 	./src/utils/my_num_to_str.c \
 	./src/utils/my_numlen.c \

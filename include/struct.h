@@ -21,20 +21,32 @@
     #define TILE_SIZE 64
     #define MAP_WIDTH 8
     #define MAP_HEIGHT 8
+    #define PI 3.14159265
     #define FOV (M_PI / 3)
-    #define NUM_RAYS 800
+    #define NUM_RAYS 300
     #define STEP_SIZE 0.1f
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600
     #define PROJECTION_PLANE ((float)800 / 2) / tan(FOV / 2)
     #define ROTATION_SPEED 0.05f
     #define MOVEMENT_SPEED 1.5f
+    #define P2 PI / 2
+    #define P3 3 * PI / 2
 
 typedef struct {
     float x;
     float y;
     float angle;
 } player_t;
+
+typedef enum {
+    PERIM,
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+    NOWHERE,
+} cardinal_t;
 
 void init_player(player_t *player); // Inits the player's position and angle
 int is_wall(int x, int y);// Returns 1 if the position corresponds to a wall
