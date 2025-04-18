@@ -27,7 +27,7 @@
     #define STEP_SIZE 0.1f
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600
-    #define PROJECTION_PLANE ((float)800 / 2) / tan(FOV / 2)
+    #define PROJECTION_PLANE ((float)SCREEN_WIDTH / 2) / tan(FOV / 2)
     #define ROTATION_SPEED 0.05f
     #define MOVEMENT_SPEED 1.5f
     #define P2 PI / 2

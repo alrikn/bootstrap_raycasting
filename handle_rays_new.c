@@ -133,8 +133,8 @@ float draw_vertical(float ray_angle, float *vertical_x,
 
 void draw_ray(player_t *player, sfRenderWindow* window)
 {
-    int r;
-    float rx; //
+    int i;
+    float rx;
     float ry;
     float ray_angle = player->angle;
     float horizontal_ray_x;
@@ -143,14 +143,19 @@ void draw_ray(player_t *player, sfRenderWindow* window)
     float vertical_ray_y;
     float horizontal_len = 0.0;
     float vertical_len = 0.0;
+    float start_angle = player->angle - FOV / 2;
+    float angle_step = FOV / NUM_RAYS;
+    float wall_height = 0.0;
+    float full_dist = 0.0;
+    sfColor colour;
 
-    ray_angle = player->angle - RADIAN_DEGREE * 40;
-    if (ray_angle < 0)
-        ray_angle += 2 * PI;
-    if (ray_angle > 2 * PI)
-        ray_angle -= 2 * PI;
-    printf("ray angle is %f\n", ray_angle);
-    for (r = 0; r < 80; r++) {
+    printf("player angle = %f\n", player->angle);
+    for (i = 0; i < NUM_RAYS; i++) {
+        ray_angle = fmod(start_angle + i * angle_step, 2 * M_PI);
+        if (ray_angle < 0)
+            ray_angle += 2 * PI;
+        if (ray_angle > 2 * PI)
+            ray_angle -= 2 * PI;
         horizontal_len = draw_horizontal(ray_angle, &horizontal_ray_x,
         &horizontal_ray_y, player);
         vertical_len = draw_vertical(ray_angle, &vertical_ray_x,
@@ -158,29 +163,19 @@ void draw_ray(player_t *player, sfRenderWindow* window)
         if (vertical_len > horizontal_len) {
             rx = horizontal_ray_x;
             ry  = horizontal_ray_y;
+            full_dist = horizontal_len;
+            colour = sfColor_fromRGB(100, 100, 200);
         } else {
             rx = vertical_ray_x;
             ry  = vertical_ray_y;
+            full_dist = vertical_len;
+            colour = sfColor_fromRGB(100, 200, 100);
         }
-        // Draw the vertical ray (gibbidy don't forget to remove)
-        sfVertexArray* v_line = sfVertexArray_create();
-        sfVertexArray_setPrimitiveType(v_line, sfLines);
-        sfVertex v_start = {
-            .position = {player->x, player->y},
-            .color = sfColor_fromRGB(0, 150, 255)
-        };
-        sfVertex v_end = {
-            .position = {rx, ry},
-            .color = sfColor_fromRGB(0, 150, 255)
-        };
-        sfVertexArray_append(v_line, v_start);
-        sfVertexArray_append(v_line, v_end);
-        sfRenderWindow_drawVertexArray(window, v_line, NULL);
-        sfVertexArray_destroy(v_line);
-        ray_angle += RADIAN_DEGREE;
-        if (ray_angle < 0)
-            ray_angle += 2 * PI;
-        if (ray_angle > 2 * PI)
-            ray_angle -= 2 * PI;
+        float delta_angle = ray_angle - player->angle;
+    float corrected_dist = full_dist * cos(delta_angle);
+    if (corrected_dist <= 0)
+        corrected_dist = 0.0001;
+    wall_height = (TILE_SIZE / corrected_dist) * PROJECTION_PLANE;
+    render_wall_column(window, i, wall_height, colour);
         }
 }

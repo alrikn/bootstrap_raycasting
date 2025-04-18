@@ -99,13 +99,13 @@ void cast_all_rays(sfRenderWindow* window, player_t player)
     float corrected_dist = 0.0;
     float wall_height = 0.0;
 
-    for (int i = 0; i < NUM_RAYS; i++) {
-        ray_angle = fmod(start_angle + i * angle_step, 2 * M_PI);
-        distance = cast_single_ray(player, ray_angle, window);
-        corrected_dist = distance;
-        wall_height = (TILE_SIZE / corrected_dist) * (PROJECTION_PLANE);
-        render_wall_column(window, i, wall_height,
-        make_colour(distance, player, ray_angle));
-    }
+    //for (int i = 0; i < NUM_RAYS; i++) {
+    //    ray_angle = fmod(start_angle + i * angle_step, 2 * M_PI);
+    //    distance = cast_single_ray(player, ray_angle, window);
+    //    corrected_dist = distance;
+    //    wall_height = (TILE_SIZE / corrected_dist) * (PROJECTION_PLANE);
+    //    render_wall_column(window, i, wall_height,
+    //    make_colour(distance, player, ray_angle));
+    //}
     draw_ray(&player, window);
 }
