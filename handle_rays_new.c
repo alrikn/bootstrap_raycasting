@@ -10,6 +10,21 @@
 #include <math.h>
 #include <stdio.h>
 
+
+/*
+**pythagorean method
+** always positive
+*/
+float distance_calculator(float init_x, float end_x, float init_y, float end_y)
+{
+    float distance = sqrt(((end_x - init_x) * (end_x - init_x)) +
+    ((end_y - init_y) * (end_y - init_y)));
+
+    if (distance < 0)
+        distance *= -1;
+    return distance;
+}
+
 void draw_ray(player_t *player, sfRenderWindow* window)
 {
     int r;
@@ -19,11 +34,18 @@ void draw_ray(player_t *player, sfRenderWindow* window)
     int map_x;
     int map_y;
     int dof; //depth of view
-    float rx;
+    float rx; //
     float ry;
     float ray_angle = player->angle;
     float xo; //x offset
     float yo; // y offset
+    float horizontal_ray_x;
+    float horizontal_ray_y;
+    float vertical_ray_x;
+    float vertical_ray_y;
+    float horizontal_len = 0.0;
+    float vertical_len = 0.0;
+
 
     if (player->x < 0 || player->y < 0) {
         printf("POS IS NEGATIVE AAAAAAAAAAAAAAAA\n");
@@ -44,7 +66,7 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             yo = 64;
             xo = -yo * aTan;
         }
-        if (ray_angle == 0 || ray_angle == PI) { // looking staright eft or straight right
+        if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591)) { // looking staright eft or straight right
             rx = (player->x);
             ry = (player->y);
             dof = 8;
@@ -61,38 +83,16 @@ void draw_ray(player_t *player, sfRenderWindow* window)
                 my >= 0 && my < MAP_HEIGHT &&
                 map[my][mx] == 1) {
                 dof = 8;
+                horizontal_ray_x = rx;
+                horizontal_ray_y = ry;
+                horizontal_len = distance_calculator(player->x, horizontal_ray_x,
+                player->y, horizontal_ray_y);
             } else {
                 rx += xo;
                 ry += yo;
                 dof += 1;
             }
         }
-        // Draw thehorizontal ray (gibiddy)
-    sfVertexArray* h_line = sfVertexArray_create();
-    sfVertexArray_setPrimitiveType(h_line, sfLines);
-    sfVertex h_start = {
-        .position = {player->x, player->y},
-        .color = sfColor_fromRGB(255, 0, 0)  // Bright red
-    };
-    sfVertex h_end = {
-        .position = {rx, ry},
-        .color = sfColor_fromRGB(255, 0, 0)
-    };
-    sfVertexArray_append(h_line, h_start);
-    sfVertexArray_append(h_line, h_end);
-    sfRenderStates states = {
-        .transform = sfTransform_Identity,
-        .texture = NULL,
-        .shader = NULL,
-        .blendMode = sfBlendAlpha
-    };
-    
-    for(int i = -1; i <= 1; i++) {
-        states.transform = sfTransform_Identity;
-        sfTransform_translate(&states.transform, i, 0);
-        sfRenderWindow_drawVertexArray(window, h_line, &states);
-    }
-    sfVertexArray_destroy(h_line);
         ////check vertical lines
         dof = 0;
         float nTan = -tan(ray_angle);
@@ -109,7 +109,7 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             xo = 64;
             yo = -xo * nTan;
         }
-        if (ray_angle == 0 || ray_angle == PI) { // looking staright eft or straight right
+        if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591)) { // looking staright eft or straight right
             rx = (player->x);
             ry = (player->y);
             dof = 8;
@@ -126,11 +126,22 @@ void draw_ray(player_t *player, sfRenderWindow* window)
                 my >= 0 && my < MAP_HEIGHT &&
                 map[my][mx] == 1) {
                 dof = 8;
+                vertical_ray_x = rx;
+                vertical_ray_y = ry;
+                vertical_len = distance_calculator(player->x, vertical_ray_x,
+                player->y, vertical_ray_y);
             } else {
                 rx += xo;
                 ry += yo;
                 dof += 1;
             }
+        }
+        if (vertical_len > horizontal_len) {
+            rx = horizontal_ray_x;
+            ry  = horizontal_ray_y;
+        } else {
+            rx = vertical_ray_x;
+            ry  = vertical_ray_y;
         }
         // Draw the vertical ray (also gibbidy don't forget to remove)
         sfVertexArray* v_line = sfVertexArray_create();
