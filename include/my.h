@@ -61,7 +61,7 @@ int my_cooler_putstr(char const *str);
 char *my_strdup(char const *src);
 char *num_to_str(int num);
 cardinal_t find_cardinal(float hit_x, float hit_y);
-void draw_all_ray(player_t *player, sfRenderWindow* window);
+void cast_all_rays(player_t *player, sfRenderWindow* window);
 float draw_vertical(float ray_angle, float *vertical_x,
     float *vertical_y, player_t *player);
 float draw_horizontal(float ray_angle, float *horizontal_x,

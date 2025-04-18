@@ -23,7 +23,7 @@ void draw_ceiling(sfRenderWindow* window, const int center_y,
         distance = center_y - y;
         normalized = distance / max_distance;
         brightness = powf(normalized, 2.0f);
-        ceiling_color = sfColor_fromRGB(10, 10, 20);
+        ceiling_color = sfColor_fromRGB(80, 80, 80);
         ceiling_color.r *= brightness;
         ceiling_color.g *= brightness;
         ceiling_color.b *= brightness;

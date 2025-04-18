@@ -25,57 +25,120 @@ float distance_calculator(float init_x, float end_x, float init_y, float end_y)
     return distance;
 }
 
-/*
-** this checks horizontal intersections
-*/
-float draw_horizontal(float ray_angle, float *horizontal_x,
-    float *horizontal_y, player_t *player)
+static float exception_horizontal(player_t *player, float *horiz_x,
+    float *horiz_y)
 {
     int search_level = 0;
-    float aTan = -1 / tan(ray_angle);
-    float y_off;
-    float x_off;
+
+    *horiz_x = (player->x);
+    *horiz_y = (player->y);
+    search_level = 10;
+    return search_level;
+}
+
+static int horizontal_not_found(float *horiz_x,
+    float *horiz_y, float *offset, int search_level)
+{
+    *horiz_x += offset[X_OFFSET];
+    *horiz_y += offset[Y_OFFSET];
+    search_level += 1;
+    return search_level;
+}
+
+static float horizontal_loop(float *offset, float *horiz_x,
+    float *horiz_y, player_t *player)
+{
     int map_x;
     int map_y;
-    float horizontal_len = 100000;
+    int level = 0;
 
-    if (ray_angle > M_PI) {
-        *horizontal_y = (((int)(player->y) >> 6) << 6) - 0.0001;
-        *horizontal_x = ((player->y) - *horizontal_y) * aTan + (player->x);
-        y_off = -64;
-        x_off = -y_off * aTan;
-    }
-    if (ray_angle < M_PI) {
-        *horizontal_y = (((int)(player->y) >> 6) << 6) + 64;
-        *horizontal_x = ((player->y) - *horizontal_y) * aTan + (player->x);
-        y_off = 64;
-        x_off = -y_off * aTan;
-    }
-    if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591)) {
-        *horizontal_x = (player->x);
-        *horizontal_y = (player->y);
-        search_level = 10;
-    }
-    while (search_level < 10) {
-        map_x = (int)(*horizontal_x) >> 6;
-        map_y = (int)(*horizontal_y) >> 6;
+    while (level < 10) {
+        map_x = (int)(*horiz_x) >> 6;
+        map_y = (int)(*horiz_y) >> 6;
         map_x = map_x < 0 ? 0 : map_x;
         map_x = map_x >= MAP_WIDTH ? MAP_WIDTH - 1 : map_x;
         map_y = map_y < 0 ? 0 : map_y;
         map_y = map_y >= MAP_HEIGHT ? MAP_HEIGHT - 1 : map_y;
         if (map_x >= 0 && map_x < MAP_WIDTH &&
-            map_y >= 0 && map_y < MAP_HEIGHT &&
-            map[map_y][map_x] == 1) {
-            search_level = 10;
-            horizontal_len = distance_calculator(player->x, *horizontal_x,
-            player->y, *horizontal_y);
-        } else {
-            *horizontal_x += x_off;
-            *horizontal_y += y_off;
-            search_level += 1;
-        }
+            map_y >= 0 && map_y < MAP_HEIGHT && map[map_y][map_x] == 1) {
+            return distance_calculator(player->x, *horiz_x,
+            player->y, *horiz_y);
+        } else
+            level = horizontal_not_found(horiz_x, horiz_y, offset, level);
     }
-    return horizontal_len;
+    return 100000;
+}
+
+/*
+** this checks horizontal intersections
+*/
+float draw_horizontal(float ray_angle, float *horiz_x,
+    float *horiz_y, player_t *player)
+{
+    int search_level = 0;
+    float aTan = -1 / tan(ray_angle);
+    float offset[2];
+
+    if (ray_angle > M_PI) {
+        *horiz_y = (((int)(player->y) >> 6) << 6) - 0.0001;
+        *horiz_x = ((player->y) - *horiz_y) * aTan + (player->x);
+        offset[Y_OFFSET] = -64;
+        offset[X_OFFSET] = -offset[Y_OFFSET] * aTan;
+    }
+    if (ray_angle < M_PI) {
+        *horiz_y = (((int)(player->y) >> 6) << 6) + 64;
+        *horiz_x = ((player->y) - *horiz_y) * aTan + (player->x);
+        offset[Y_OFFSET] = 64;
+        offset[X_OFFSET] = -offset[Y_OFFSET] * aTan;
+    }
+    if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591))
+        search_level = exception_horizontal(player, horiz_x, horiz_y);
+    return horizontal_loop(offset, horiz_x, horiz_y, player);
+}
+
+static int vertical_not_found(float *vertical_x,
+    float *vertical_y, float *offset, int search_level)
+{
+    *vertical_x += offset[X_OFFSET];
+    *vertical_y += offset[Y_OFFSET];
+    search_level += 1;
+    return search_level;
+}
+
+static float vertical_loop(player_t *player, float *vertical_x,
+    float *vertical_y, float *offset)
+{
+    int map_x;
+    int map_y;
+    int search_level = 0;
+
+    while (search_level < 10) {
+        map_x = (int)(*vertical_x) >> 6;
+        map_y = (int)(*vertical_y) >> 6;
+        map_x = map_x < 0 ? 0 : map_x;
+        map_x = map_x >= MAP_WIDTH ? MAP_WIDTH - 1 : map_x;
+        map_y = map_y < 0 ? 0 : map_y;
+        map_y = map_y >= MAP_HEIGHT ? MAP_HEIGHT - 1 : map_y;
+        if (map_x >= 0 && map_x < MAP_WIDTH &&
+            map_y >= 0 && map_y < MAP_HEIGHT && map[map_y][map_x] == 1) {
+            return distance_calculator(player->x, *vertical_x,
+            player->y, *vertical_y);
+        } else
+            search_level = vertical_not_found(vertical_x, vertical_y,
+            offset, search_level);
+    }
+    return 1000000;
+}
+
+static float exception_vertical(player_t *player, float *vertical_x,
+    float *vertical_y)
+{
+    int search_level = 0;
+
+    *vertical_x = (player->x);
+    *vertical_y = (player->y);
+    search_level = 10;
+    return search_level;
 }
 
 /*
@@ -86,47 +149,21 @@ float draw_vertical(float ray_angle, float *vertical_x,
 {
     int search_level = 0;
     float nTan = -tan(ray_angle);
-    float y_off;
-    float x_off;
-    int map_x;
-    int map_y;
-    float vertical_len = 100000;
+    float offset[2];
 
     if (ray_angle > P2 && ray_angle < P3) {
-        *vertical_x = (((int)(player->x) >> 6 ) << 6)-0.0001;
+        *vertical_x = (((int)(player->x) >> 6) << 6) - 0.0001;
         *vertical_y = ((player->x) - *vertical_x) * nTan + (player->y);
-        x_off = -64;
-        y_off = -x_off * nTan;
-    } 
+        offset[X_OFFSET] = -64;
+        offset[Y_OFFSET] = -offset[X_OFFSET] * nTan;
+    }
     if (ray_angle < P2 || ray_angle > P3) {
         *vertical_x = (((int)(player->x) >> 6) << 6) + 64;
         *vertical_y = ((player->x) - *vertical_x) * nTan + (player->y);
-        x_off = 64;
-        y_off = -x_off * nTan;
+        offset[X_OFFSET] = 64;
+        offset[Y_OFFSET] = -offset[X_OFFSET] * nTan;
     }
-    if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591)) {
-        *vertical_x = (player->x);
-        *vertical_y = (player->y);
-        search_level = 8;
-    }
-    while (search_level < 10) {
-        map_x = (int)(*vertical_x) >> 6;
-        map_y = (int)(*vertical_y) >> 6;
-        map_x = map_x < 0 ? 0 : map_x;
-        map_x = map_x >= MAP_WIDTH ? MAP_WIDTH - 1 : map_x;
-        map_y = map_y < 0 ? 0 : map_y;
-        map_y = map_y >= MAP_HEIGHT ? MAP_HEIGHT - 1 : map_y;
-        if (map_x >= 0 && map_x < MAP_WIDTH &&
-            map_y >= 0 && map_y < MAP_HEIGHT &&
-            map[map_y][map_x] == 1) {
-            search_level = 10;
-            vertical_len = distance_calculator(player->x, *vertical_x,
-            player->y, *vertical_y);
-        } else {
-            *vertical_x += x_off;
-            *vertical_y += y_off;
-            search_level += 1;
-        }
-    }
-    return vertical_len;
+    if (ray_angle == 0 || (ray_angle < 3.141593 && ray_angle > 3.141591))
+        search_level = exception_vertical(player, vertical_x, vertical_y);
+    return vertical_loop(player, vertical_x, vertical_y, offset);
 }

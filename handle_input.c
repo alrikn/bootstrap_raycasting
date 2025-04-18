@@ -36,7 +36,6 @@ static bool print_handle(int player_x, int player_y, int old_y, int old_x)
     player_y = player_y / TILE_SIZE;
     old_x = old_x / TILE_SIZE;
     old_y = old_y / TILE_SIZE;
-
     if (player_x != old_x || player_y != old_y) {
         return true;
     }

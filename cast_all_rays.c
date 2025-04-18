@@ -66,7 +66,7 @@ float find_dist(sfColor *colour, player_t *player, float ray_angle)
     return full_dist;
 }
 
-void draw_all_ray(player_t *player, sfRenderWindow* window)
+void cast_all_rays(player_t *player, sfRenderWindow* window)
 {
     float ray_angle = player->angle;
     float wall_height = 0.0;

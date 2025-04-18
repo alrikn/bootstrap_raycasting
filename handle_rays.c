@@ -73,8 +73,8 @@ static sfColor make_colour(float distance, player_t player, float ray_angle)
     float hit_x = player.x + cos(ray_angle) * distance;
     float hit_y = player.y + sin(ray_angle) * distance;
     cardinal_t card = find_cardinal(hit_x, hit_y);
-    float x_offset = fmod(hit_x, TILE_SIZE);
-    float y_offset = fmod(hit_y, TILE_SIZE);
+    float x_off = fmod(hit_x, TILE_SIZE);
+    float y_off = fmod(hit_y, TILE_SIZE);
 
     if (card == NORTH || card == SOUTH)
         colour = sfColor_fromRGB(100, 100, 200);
@@ -85,27 +85,4 @@ static sfColor make_colour(float distance, player_t player, float ray_angle)
     if (card == NOWHERE)
         colour = sfColor_fromRGB(100, 100, 100);
     return colour;
-}
-
-/*
-**
-*/
-void cast_all_rays(sfRenderWindow* window, player_t player)
-{
-    float start_angle = player.angle - FOV / 2;
-    float angle_step = FOV / NUM_RAYS;
-    float ray_angle = 0.0;
-    float distance = 0.0;
-    float corrected_dist = 0.0;
-    float wall_height = 0.0;
-
-    //for (int i = 0; i < NUM_RAYS; i++) {
-    //    ray_angle = fmod(start_angle + i * angle_step, 2 * M_PI);
-    //    distance = cast_single_ray(player, ray_angle, window);
-    //    corrected_dist = distance;
-    //    wall_height = (TILE_SIZE / corrected_dist) * (PROJECTION_PLANE);
-    //    render_wall_column(window, i, wall_height,
-    //    make_colour(distance, player, ray_angle));
-    //}
-    draw_all_ray(&player, window);
 }

@@ -33,6 +33,8 @@
     #define P2 PI / 2
     #define P3 3 * PI / 2
     #define RADIAN_DEGREE 0.0175533
+    #define X_OFFSET 0
+    #define Y_OFFSET 1
 
 typedef struct {
     float x;
@@ -52,7 +54,6 @@ typedef enum {
 void init_player(player_t *player); // Inits the player's position and angle
 int is_wall(int x, int y);// Returns 1 if the position corresponds to a wall
 void draw_floor_and_ceiling(sfRenderWindow *window);//Drw floor&celing > screen
-void cast_all_rays(sfRenderWindow *window, player_t player);
 float cast_single_ray(player_t player, float ray_angle,
     sfRenderWindow *window);
 void render_wall_column(sfRenderWindow *window, int column, float wall_height,

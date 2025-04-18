@@ -58,7 +58,7 @@ int main(int ac, char **av)
         handle_closure(window, event, &player);
         sfRenderWindow_clear(window, sfBlack);
         draw_floor_and_ceiling(window);
-        cast_all_rays(window, player);
+        cast_all_rays(&player, window);
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
