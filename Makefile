@@ -10,17 +10,16 @@ NAME = raytrace
 TEST_BIN = unit_tests
 
 SRC = ./main.c \
-	./is_wall.c \
-	./draw_floor_ceiling.c \
-	./init_player.c \
-	./handle_rays.c \
-	./render_wall.c \
-	./map_create.c \
-	./handle_input.c \
-	./print_pos.c \
-	./find_cardinal.c \
-	./handle_rays_new.c \
-	./cast_all_rays.c \
+	./src/drawing/draw_floor_ceiling.c \
+	./src/drawing/render_wall.c \
+	./src/drawing/map_create.c \
+	./src/map_handle/is_wall.c \
+	./src/map_handle/find_cardinal.c \
+	./src/map_handle/rays/handle_ray.c \
+	./src/map_handle/rays/cast_all_rays.c \
+	./src/player/init_player.c \
+	./src/player/print_pos.c \
+	./src/player/handle_input.c \
 	./src/utils/my_cooler_putstr.c \
 	./src/utils/my_num_to_str.c \
 	./src/utils/my_numlen.c \

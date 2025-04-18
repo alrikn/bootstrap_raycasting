@@ -5,3 +5,4 @@ recode.c
 *.txt
 *.log
 *.out
+handle_rays_old.c

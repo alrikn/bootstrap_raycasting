@@ -8,7 +8,6 @@
 #include "my.h"
 #include "struct.h"
 #include <math.h>
-#include <stdio.h>
 
 
 /*
