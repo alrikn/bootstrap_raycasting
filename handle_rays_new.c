@@ -47,10 +47,14 @@ void draw_ray(player_t *player, sfRenderWindow* window)
     float vertical_len = 0.0;
 
 
-    if (player->x < 0 || player->y < 0) {
-        printf("POS IS NEGATIVE AAAAAAAAAAAAAAAA\n");
-    }
-    for (r = 0; r < 1; r++) {
+    ray_angle = player->angle - RADIAN_DEGREE * 40;
+    if (ray_angle < 0)
+        ray_angle += 2 * PI;
+    if (ray_angle > 2 * PI)
+        ray_angle -= 2 * PI;
+
+    printf("ray angle is %f\n", ray_angle);
+    for (r = 0; r < 80; r++) {
         //this cjhecks horizontal grid lines
         dof = 0;
         float aTan = -1 / tan(ray_angle);
@@ -78,7 +82,6 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             mx = mx >= MAP_WIDTH ? MAP_WIDTH - 1 : mx;
             my = my < 0 ? 0 : my;
             my = my >= MAP_HEIGHT ? MAP_HEIGHT - 1 : my;
-            printf("map y = %d, map x = %d\n", my, mx);
             if (mx >= 0 && mx < MAP_WIDTH && 
                 my >= 0 && my < MAP_HEIGHT &&
                 map[my][mx] == 1) {
@@ -103,7 +106,6 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             yo = -xo * nTan;
         } 
         if (ray_angle < P2 || ray_angle > P3) { //looking right
-            printf("we looking right\n");
             rx = (((int)(player->x)>>6)<<6) + 64; // thy is to round the value
             ry = ((player->x) - rx) * nTan + (player->y);
             xo = 64;
@@ -121,7 +123,6 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             mx = mx >= MAP_WIDTH ? MAP_WIDTH - 1 : mx;
             my = my < 0 ? 0 : my;
             my = my >= MAP_HEIGHT ? MAP_HEIGHT - 1 : my;
-            printf("map y = %d, map x = %d\n", my, mx);
             if (mx >= 0 && mx < MAP_WIDTH && 
                 my >= 0 && my < MAP_HEIGHT &&
                 map[my][mx] == 1) {
@@ -143,7 +144,7 @@ void draw_ray(player_t *player, sfRenderWindow* window)
             rx = vertical_ray_x;
             ry  = vertical_ray_y;
         }
-        // Draw the vertical ray (also gibbidy don't forget to remove)
+        // Draw the vertical ray (gibbidy don't forget to remove)
         sfVertexArray* v_line = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(v_line, sfLines);
     sfVertex v_start = {
@@ -158,5 +159,10 @@ void draw_ray(player_t *player, sfRenderWindow* window)
     sfVertexArray_append(v_line, v_end);
     sfRenderWindow_drawVertexArray(window, v_line, NULL);
     sfVertexArray_destroy(v_line);
+    ray_angle += RADIAN_DEGREE;
+    if (ray_angle < 0)
+        ray_angle += 2 * PI;
+    if (ray_angle > 2 * PI)
+        ray_angle -= 2 * PI;
     }
 }

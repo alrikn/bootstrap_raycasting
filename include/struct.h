@@ -32,6 +32,7 @@
     #define MOVEMENT_SPEED 1.5f
     #define P2 PI / 2
     #define P3 3 * PI / 2
+    #define RADIAN_DEGREE 0.0175533
 
 typedef struct {
     float x;
