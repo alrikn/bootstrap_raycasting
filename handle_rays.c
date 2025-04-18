@@ -107,5 +107,5 @@ void cast_all_rays(sfRenderWindow* window, player_t player)
     //    render_wall_column(window, i, wall_height,
     //    make_colour(distance, player, ray_angle));
     //}
-    draw_ray(&player, window);
+    draw_all_ray(&player, window);
 }

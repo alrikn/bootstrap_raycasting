@@ -32,7 +32,7 @@ void print_pos(int player_x, int player_y)
 
     my_cooler_putstr("\n\n");
     printf("player x = %d, player y = %d\n", player_x, player_y);
-    for (int y = 0; y < MAP_WIDTH; y++) {
+    for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             print_map_matrix(x, y, tile_x, tile_y);
         }

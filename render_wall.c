@@ -14,7 +14,7 @@ void render_wall_column(sfRenderWindow* window, int column,
     sfRectangleShape* column_rect = sfRectangleShape_create();
     sfVector2f size = {SCREEN_WIDTH / (float)NUM_RAYS, wall_height};
     float y_pos = ((float)SCREEN_HEIGHT / 2) - (wall_height / 2);
-    float darkness = fmin(1.0f, 300.0f / wall_height);
+    float darkness = fmin(1.0f, wall_height / 300.0f);
 
     sfRectangleShape_setSize(column_rect, size);
     sfRectangleShape_setPosition(column_rect,

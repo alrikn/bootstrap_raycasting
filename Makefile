@@ -20,6 +20,7 @@ SRC = ./main.c \
 	./print_pos.c \
 	./find_cardinal.c \
 	./handle_rays_new.c \
+	./cast_all_rays.c \
 	./src/utils/my_cooler_putstr.c \
 	./src/utils/my_num_to_str.c \
 	./src/utils/my_numlen.c \
@@ -31,7 +32,7 @@ SRC = ./main.c \
 	./src/utils/my_strdup.c \
 	./src/utils/my_strtok.c \
 	./src/utils/my_str_to_double.c \
-	./src/utils/my_error_putstr.c
+	./src/utils/my_error_putstr.c \
 
 TEST_SRC = $(SRC) \
 	./tests/test_my_printf.c

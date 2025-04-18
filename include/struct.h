@@ -19,8 +19,8 @@
     #include <stdbool.h>
     #include <SFML/Audio/Music.h>
     #define TILE_SIZE 64
-    #define MAP_WIDTH 8
-    #define MAP_HEIGHT 8
+    #define MAP_WIDTH 9
+    #define MAP_HEIGHT 10
     #define PI 3.14159265
     #define FOV (M_PI / 3)
     #define NUM_RAYS 300

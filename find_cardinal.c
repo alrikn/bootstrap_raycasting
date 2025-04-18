@@ -38,9 +38,6 @@ cardinal_t find_cardinal(float hit_x, float hit_y)
     int tile_x = x / TILE_SIZE;
     int tile_y = y / TILE_SIZE;
 
-    //if(is_wall(hit_x, hit_y)) {
-    //    printf("we are actually hitting a wall \n");
-    //}
     if (tile_x < 0 || tile_x >= MAP_WIDTH || tile_y < 0 ||
     tile_y >= MAP_HEIGHT)
         return PERIM;
