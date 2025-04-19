@@ -58,10 +58,10 @@ float find_dist(sfColor *colour, player_t *player, float ray_angle)
     &vertical_ray_y, player);
     if (vertical_len > horizontal_len) {
         full_dist = horizontal_len;
-        *colour = sfColor_fromRGB(100, 100, 200);
+        *colour = sfColor_fromRGB(196, 42, 27);
     } else {
         full_dist = vertical_len;
-        *colour = sfColor_fromRGB(100, 200, 100);
+        *colour = sfColor_fromRGB(196, 117, 27);
     }
     return full_dist;
 }

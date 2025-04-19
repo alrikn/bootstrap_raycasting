@@ -42,10 +42,10 @@ static bool print_handle(int player_x, int player_y, int old_y, int old_x)
     return false;
 }
 
-static void move_player(player_t *player, float move_dir)
+static void move_player(player_t *player, float move_dir, float angle)
 {
-    float move_x = cosf(player->angle) * MOVEMENT_SPEED * move_dir;
-    float move_y = sinf(player->angle) * MOVEMENT_SPEED * move_dir;
+    float move_x = cosf(angle) * MOVEMENT_SPEED * move_dir;
+    float move_y = sinf(angle) * MOVEMENT_SPEED * move_dir;
     float new_x = player->x + move_x;
     float new_y = player->y + move_y;
 
@@ -66,9 +66,15 @@ void key_pressed(sfEvent *event, player_t *player)
         rotate(event, player);
     }
     if (event->key.code == sfKeyW) {
-        move_player(player, 1.5f);
+        move_player(player, 2.5f, player->angle);
     }
     if (event->key.code == sfKeyS) {
-        move_player(player, -1.5f);
+        move_player(player, -1.5f, player->angle);
+    }
+    if (event->key.code == sfKeyD) {
+        move_player(player, 2.5f, player->angle + P2);
+    }
+    if (event->key.code == sfKeyA) {
+        move_player(player, 2.5f, player->angle - P2);
     }
 }

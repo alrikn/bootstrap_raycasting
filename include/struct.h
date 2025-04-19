@@ -19,11 +19,11 @@
     #include <stdbool.h>
     #include <SFML/Audio/Music.h>
     #define TILE_SIZE 64
-    #define MAP_WIDTH 9
+    #define MAP_WIDTH 10
     #define MAP_HEIGHT 10
     #define PI 3.14159265
     #define FOV (M_PI / 3)
-    #define NUM_RAYS 300
+    #define NUM_RAYS 800
     #define STEP_SIZE 0.1f
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600
@@ -35,6 +35,7 @@
     #define RADIAN_DEGREE 0.0175533
     #define X_OFFSET 0
     #define Y_OFFSET 1
+    #define DOOR 4
 
 typedef struct {
     float x;

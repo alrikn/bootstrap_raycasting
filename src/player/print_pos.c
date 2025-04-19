@@ -19,6 +19,10 @@ void print_map_matrix(int x, int y, int tile_x, int tile_y)
         my_cooler_putstr("X ");
         return;
     }
+    if (map[y][x] == 4) {
+        my_cooler_putstr("D ");
+        return;
+    }
     if (map[y][x] == 0) {
         my_cooler_putstr(". ");
         return;
