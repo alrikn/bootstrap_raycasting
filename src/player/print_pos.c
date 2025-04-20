@@ -29,13 +29,14 @@ void print_map_matrix(int x, int y, int tile_x, int tile_y)
     }
 }
 
-void print_pos(int player_x, int player_y)
+void print_pos(int player_x, int player_y, player_t *player)
 {
     int tile_x = player_x / TILE_SIZE;
     int tile_y = player_y / TILE_SIZE;
 
     my_cooler_putstr("\n\n");
-    printf("player x = %d, player y = %d\n", player_x, player_y);
+    printf("x_pos = %d, y_pos = %d, angle = %f\n", player_x,
+    player_y, player->angle);
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             print_map_matrix(x, y, tile_x, tile_y);

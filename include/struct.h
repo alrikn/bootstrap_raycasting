@@ -23,7 +23,7 @@
     #define MAP_HEIGHT 10
     #define PI 3.14159265
     #define FOV (M_PI / 3)
-    #define NUM_RAYS 800
+    #define NUM_RAYS 400
     #define STEP_SIZE 0.1f
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600
@@ -41,6 +41,8 @@ typedef struct {
     float x;
     float y;
     float angle;
+    float force_angle;
+    float pot_force;
 } player_t;
 
 typedef enum {
@@ -60,7 +62,7 @@ float cast_single_ray(player_t player, float ray_angle,
 void render_wall_column(sfRenderWindow *window, int column, float wall_height,
     sfColor color);
 void key_pressed(sfEvent *event, player_t *player);
-void print_pos(int player_x, int player_y);
+void print_pos(int player_x, int player_y, player_t *player);
 
 extern const int map[MAP_HEIGHT][MAP_WIDTH];
 

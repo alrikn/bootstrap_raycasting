@@ -33,7 +33,7 @@ float draw_handler(float ray_angle, float full_dist, player_t *player)
     float corrected_dist;
 
     delta_angle = ray_angle - player->angle;
-    corrected_dist = full_dist * cos(delta_angle);
+    corrected_dist = full_dist * cosf(delta_angle);
     if (corrected_dist <= 0)
         corrected_dist = 0.0001;
     return corrected_dist;
