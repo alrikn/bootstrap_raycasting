@@ -15,14 +15,18 @@
 
 static int explanation(void)
 {
-    my_cooler_putstr("[MY_RADAR]\n\t-h shows this help message\n");
-    my_cooler_putstr("Air traffic simulation panel\n");
+    my_cooler_putstr("[MY_RAYTRACER]\n\t-h shows this help message\n");
+    my_cooler_putstr("a basic raytracing program\n");
     my_cooler_putstr("USAGE: \n\t");
-    my_cooler_putstr("./my_radar [OPTIONS] path_to_script\n\t");
-    my_cooler_putstr("path_to_script\tThe path to the script file\n OPTION\n");
+    my_cooler_putstr("./raytrace\n\t");
+    my_cooler_putstr("OPTION\n");
     my_cooler_putstr("\t-h\tprint the usage and quit\nUSER INTERACTIONS\n");
-    my_cooler_putstr("\t'L' key\tenable/disable hitboxes and areas.\n");
-    my_cooler_putstr("\t'S' key\tenable/disable sprites.\n");
+    my_cooler_putstr("\t'q' key\trotate left\n");
+    my_cooler_putstr("\t'e' key\trotate right\n");
+    my_cooler_putstr("\t'w' key\tmove forward\n");
+    my_cooler_putstr("\t's' key\tmove backward\n");
+    my_cooler_putstr("\t'a' key\tmove left\n");
+    my_cooler_putstr("\t'd' key\tmove right\n");
     return 0;
 }
 
@@ -52,7 +56,7 @@ int main(int ac, char **av)
 
     if (ac == 2 && my_strlen(av[1]) == 2 && av[1][0] == '-' && av[1][1] == 'h')
         return explanation();
-    sfRenderWindow_setFramerateLimit(window, 60);
+    sfRenderWindow_setFramerateLimit(window, 0);
         init_player(&player);
     while (sfRenderWindow_isOpen(window)) {
         handle_closure(window, event, &player);

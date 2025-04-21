@@ -12,5 +12,5 @@ void init_player(player_t *player)
 {
     player->x = 1.5f * TILE_SIZE;
     player->y = 1.5f * TILE_SIZE;
-    player->angle = 0.2f;
+    player->angle = 0.0f;
 }

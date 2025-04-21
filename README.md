@@ -12,13 +12,13 @@ To compile the binary:
 
 The compiled binary will be called:
 
-    my_radar
+    raytrace
 
 ## Usage
 
 To run the program:
 
-    ./my_radar <input_file>
+    ./raytrace
 
 To show the help message:
 
@@ -26,14 +26,11 @@ To show the help message:
 
 ## Description
 
-- Planes travel from point A to point B with a defined speed.
-- Some planes have a delay before they take off.
-- If two planes collide, they are deleted.
-- If a collision happens within a control tower's range, it's prevented.
-- The program can efficiently handle up to **10,000 planes**.
+- The player moves in a 2d array
+- You can change the map in map_create.c
+- You cannot go outside the map
+- You can change how big the map is in struct.h
 
 ## Disclaimer
 
 You need to have the csfml library installed to run this.
-
-There is a slight mem leak so be careful

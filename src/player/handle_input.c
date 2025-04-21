@@ -14,7 +14,7 @@
 static float normalize_angle(float angle)
 {
     angle = fmodf(angle, 2 * M_PI);
-    if (angle < 0)
+    if (angle <= 0)
         angle += 2 * M_PI;
     return angle;
 }
