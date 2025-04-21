@@ -8,6 +8,7 @@
 #include "my.h"
 #include "math.h"
 #include "struct.h"
+#include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -61,8 +62,7 @@ static void handle_sliding(player_t *player, float new_x, float new_y)
         player->y = new_y;
         return;
     }
-    printf("move not allowed\n");
-    printf("new_x = %f, new_y = %f\n", new_x, new_y);
+    printf("not allowed move: new_x = %f, new_y = %f\n", new_x, new_y);
 }
 
 static void move_player(player_t *player, float move_dir, float angle)
@@ -85,12 +85,12 @@ void key_pressed(sfEvent *event, player_t *player)
 {
     if (event->key.code == sfKeyQ || event->key.code == sfKeyE)
         rotate(event, player);
-    if (event->key.code == sfKeyW)
+    if (event->key.code == sfKeyW || event->key.code == sfKeyUp)
         move_player(player, 2.5, player->angle);
-    if (event->key.code == sfKeyS)
+    if (event->key.code == sfKeyS || event->key.code == sfKeyDown)
         move_player(player, -1.5, player->angle);
-    if (event->key.code == sfKeyD)
+    if (event->key.code == sfKeyD || event->key.code == sfKeyRight)
         move_player(player, 2, player->angle + P2);
-    if (event->key.code == sfKeyA)
+    if (event->key.code == sfKeyA || event->key.code == sfKeyLeft)
         move_player(player, 2, player->angle - P2);
 }

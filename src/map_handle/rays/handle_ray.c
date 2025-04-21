@@ -70,6 +70,7 @@ static float horizontal_loop(float *offset, float *horiz_x,
 
 /*
 ** this checks horizontal intersections
+** TODO fix: search level
 */
 float draw_horizontal(float ray_angle, float *horiz_x,
     float *horiz_y, player_t *player)

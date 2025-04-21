@@ -23,7 +23,7 @@
     #define MAP_HEIGHT 10
     #define PI 3.14159265
     #define FOV (M_PI / 3)
-    #define NUM_RAYS 400
+    #define NUM_RAYS 800
     #define STEP_SIZE 0.1f
     #define SCREEN_WIDTH 800
     #define SCREEN_HEIGHT 600

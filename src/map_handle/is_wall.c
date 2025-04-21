@@ -7,6 +7,10 @@
 
 #include "my.h"
 
+/*
+**takes the raw inputs (not yet divided by 64)
+**just check if the wall is over 0
+*/
 int is_wall(int x, int y)
 {
     int tile_x = x / TILE_SIZE;
