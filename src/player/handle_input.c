@@ -39,9 +39,8 @@ static bool print_handle(int player_x, int player_y, int old_y, int old_x)
     player_y = player_y / TILE_SIZE;
     old_x = old_x / TILE_SIZE;
     old_y = old_y / TILE_SIZE;
-    if (player_x != old_x || player_y != old_y) {
+    if (player_x != old_x || player_y != old_y)
         return true;
-    }
     return false;
 }
 
@@ -56,7 +55,7 @@ static void handle_sliding(player_t *player, float new_x, float new_y)
         player->x = new_x;
         return;
     }
-    if (!is_wall(player->y, new_y)) {
+    if (!is_wall(player->x, new_y)) {
         if (print_handle(player->x, player->y, new_y, player->x))
             print_pos(player->x, new_y, player);
         player->y = new_y;
@@ -78,9 +77,8 @@ static void move_player(player_t *player, float move_dir, float angle)
             print_pos(new_x, new_y, player);
         player->x = new_x;
         player->y = new_y;
-    } else {
+    } else
         handle_sliding(player, new_x, new_y);
-    }
 }
 
 void key_pressed(sfEvent *event, player_t *player)
@@ -88,11 +86,11 @@ void key_pressed(sfEvent *event, player_t *player)
     if (event->key.code == sfKeyQ || event->key.code == sfKeyE)
         rotate(event, player);
     if (event->key.code == sfKeyW)
-        move_player(player, 2.5f, player->angle);
+        move_player(player, 2.5, player->angle);
     if (event->key.code == sfKeyS)
-        move_player(player, -1.5f, player->angle);
+        move_player(player, -1.5, player->angle);
     if (event->key.code == sfKeyD)
-        move_player(player, 2.5f, player->angle + P2);
+        move_player(player, 2, player->angle + P2);
     if (event->key.code == sfKeyA)
-        move_player(player, 2.5f, player->angle - P2);
+        move_player(player, 2, player->angle - P2);
 }

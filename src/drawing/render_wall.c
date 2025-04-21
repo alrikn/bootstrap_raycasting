@@ -18,7 +18,7 @@ void render_wall_column(sfRenderWindow* window, int column,
 
     sfRectangleShape_setSize(column_rect, size);
     sfRectangleShape_setPosition(column_rect,
-    (sfVector2f){column *size.x, y_pos});
+    (sfVector2f){column * size.x, y_pos});
     color.r *= darkness;
     color.g *= darkness;
     color.b *= darkness;
