@@ -43,8 +43,6 @@ void handle_closure(sfRenderWindow* window, sfEvent event, player_t *player)
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
-        if (event.key.type == sfEvtKeyPressed)
-            key_pressed(&event, player);
     }
 }
 
@@ -64,6 +62,7 @@ int main(int ac, char **av)
         draw_floor_and_ceiling(window);
         cast_all_rays(&player, window);
         sfRenderWindow_display(window);
+        key_pressed(&event, &player);
     }
     sfRenderWindow_destroy(window);
     return 0;
