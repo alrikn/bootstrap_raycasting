@@ -41,8 +41,8 @@ typedef struct {
     float x;
     float y;
     float angle;
-    float force_angle;
-    float pot_force;
+    float force_x;
+    float force_y;
 } player_t;
 
 typedef enum {

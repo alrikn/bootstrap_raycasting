@@ -20,6 +20,7 @@ SRC = ./main.c \
 	./src/player/init_player.c \
 	./src/player/print_pos.c \
 	./src/player/handle_input.c \
+	./src/player/player_potential.c \
 	./src/utils/my_cooler_putstr.c \
 	./src/utils/my_num_to_str.c \
 	./src/utils/my_numlen.c \

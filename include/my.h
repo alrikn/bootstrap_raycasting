@@ -66,4 +66,8 @@ float draw_vertical(float ray_angle, float *vertical_x,
     float *vertical_y, player_t *player);
 float draw_horizontal(float ray_angle, float *horizontal_x,
     float *horizontal_y, player_t *player);
+bool print_handle(int player_x, int player_y, int old_y, int old_x);
+void handle_sliding(player_t *player, float new_x, float new_y);
+void move_potential(player_t *player, float pot_force, float force_angle);
+void apply_potential(player_t *player);
 #endif /* COMMON_H */
